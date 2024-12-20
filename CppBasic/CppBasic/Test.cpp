@@ -1,5 +1,5 @@
-#include "Test.h"
 #include <iostream>
+#include "Test.h"
 
 // 정의부
 using namespace std;
@@ -378,14 +378,14 @@ void Test::Test_1220_RPS()
 	const int Paper = 2;
 	const int Scissors = 3;
 
-	int mySelection = 0;
-	string selectText = "";
-
 	int myWinCount = 0;
 	int enemyWinCount = 0;
 
 	while (myWinCount < 3 && enemyWinCount < 3)
 	{
+		int mySelection = 0;
+		string selectText = "";
+
 		while (mySelection < 1 || mySelection > 3)
 		{
 			printf("Select Rock(1) Paper(2) Scissors(3) : ");
@@ -488,3 +488,83 @@ void Test::Test_1220_RPS()
 		mySelection = 0;
 	}
 }
+
+void Test::Test_1220_Template()
+{
+	int data = Add(1, 3);
+	float data2 = Add(1.5f, 3.3f);
+
+	int data3 = TemplateAdd<int>(10, 30);
+	float data4 = TemplateAdd<float>(10.5f, 2.6f);
+
+	// 이름 : Clamp
+	// 파라메터 : value, min, max
+	// 기능 : value가 min보다 적으면 min값, max보다 크면 max값, min~max 사이에 있으면 value를 리턴하는 함수
+	// 템플릿 함수이어야 한다.
+
+	int data5 = Clamp<int>(10, 0, 100);
+	int data6 = Clamp<int>(110, 0, 100);
+}
+
+void Test::Test_1220_Array()
+{
+	// 같은 종류의 데이터타입이 연속적으로 저장되어 있다.(빠르게 각 요소에 접근할 수 있다.)
+	int array1[5];
+	array1[0] = 1;
+	array1[1] = 10;
+	array1[2] = 7;
+	array1[3] = 5;
+	array1[4] = 20;
+
+	int array2[5] = { 1, 3, 5, 7, 9 };
+	//array2[5] = 10;	// 크기는 무조건 고정이다.(삽입/삭제가 어렵다)
+
+	int* array3 = array1;
+
+	int array4[4][3] = {	// 배열은 뒤에서부터 해석(3개짜리가 4개 있다.)
+		{1,2,3},
+		{4,5,6},
+		{7,8,9},
+		{10,11,12}
+	};
+
+	for (int i = 0; i < 5; i++)
+	{
+		printf("%d\n", array2[i]);
+	}
+
+	for (int num : array2)
+	{
+		printf("%d\n", num);
+	}
+}
+
+void TestFunction(int number1, float number2)	// 함수의 정의
+{
+	// 함수의 바디, 코드 블럭
+
+	// 함수가 실행할 기능들 구현
+
+	return;	// void는 return이 있어도 되고 없어도 된다.
+}
+
+int TestFunction2(int number1, float number2)
+{
+	if (number1 > 1)
+		return 1;
+
+	return number1 + number2;	// 함수의 종료지점
+
+	printf("Hello");	// 이 줄은 절대 실행되지 않는다.
+}
+
+int Add(int num1, int num2)
+{
+	return num1 + num2;
+}
+
+float Add(float num1, float num2)
+{
+	return num1 + num2;
+}
+
