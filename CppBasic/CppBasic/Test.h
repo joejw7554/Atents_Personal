@@ -17,4 +17,7 @@ public:
 	void Test_1220_Comparison();
 	void Test_1220_Logical();
 	void Test_1220_Bitwise();
+	void Test_1220_ControlStatement();
+	void Test_1220_SlotMachine();
+	void Test_1220_RPS();
 };

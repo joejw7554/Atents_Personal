@@ -14,19 +14,19 @@ void Test::Run2()
 
 void Test::Test_1219_InputOutput()
 {
-	std::string name;
-	int number = 10;
-	float fNumber = 10.0f;
+    std::string name;
+    int number = 10;
+    float fNumber = 10.0f;
 
-	//std::cin >> number;     // C++ 표준 입력 방식
-	//scanf_s("%d", &number);       
-	std::cin >> name;
+    //std::cin >> number;     // C++ 표준 입력 방식
+    //scanf_s("%d", &number);       
+    std::cin >> name;
 
-	//std::cout << "Hello World! " << number <<"\n";  // C++의 표준 콘솔 출력 방식
-	//printf("Hello World! %d\n", fNumber);   // C언어의 표준 출력 방식 (%d:정수, %f:실수)
-	//printf("Hello World! %f\n", fNumber);
-	//std::cout << "My name is " << name << ".\n";
-	printf("My name is %s.\n", name.c_str());
+    //std::cout << "Hello World! " << number <<"\n";  // C++의 표준 콘솔 출력 방식
+    //printf("Hello World! %d\n", fNumber);   // C언어의 표준 출력 방식 (%d:정수, %f:실수)
+    //printf("Hello World! %f\n", fNumber);
+    //std::cout << "My name is " << name << ".\n";
+    printf("My name is %s.\n", name.c_str());
 }
 
 void Test::Test_1219_DataType()
@@ -178,7 +178,7 @@ void Test::Test_1220_Logical()
 
 	// ! : not. true는 false로, false는 true로 변경.
 	result = true;
-	result = !result;
+	result = !result;	
 }
 
 void Test::Test_1220_Bitwise()
@@ -233,4 +233,258 @@ void Test::Test_1220_Bitwise()
 	weaponAvailiable = (weaponData & Bow) != 0;		// 활을 사용할 수 있는지 확인
 
 
+}
+
+void Test::Test_1220_ControlStatement()
+{
+	// 제어문(Control Statement)
+	int a = 10;
+
+	// 조건문
+	if (a > 5)
+	{
+		// 조건이 true일 때 실행		
+	}
+	else
+	{
+		// 조건이 false일 때 실행
+	}
+
+	if (a < 5)
+	{
+		// a가 5보다 작으면 실행
+	}
+
+	if (a < 5)
+	{
+		// a가 5보다 작을 때 실행
+	}
+	else if (a < 10)
+	{
+		// a가 5보다 크거나 같고 10보다 작을 때 실행
+	}
+
+	printf("Input number : ");
+	cin >> a;
+	if (a % 2 == 0)
+	{
+		printf("%d is even.\n", a);
+	}
+	else
+	{
+		printf("%d is odd.\n", a);
+	}
+
+	switch (a)
+	{
+	case 1:
+	case 2:
+		printf("1\n");
+		printf("2\n");
+		break;
+	case 3:
+		printf("3\n");
+		break;
+	default:
+		printf("Default\n");
+		break;
+	}
+
+	// 반복문(Loop)
+	int i = 0;
+	while (i < 11)	// 조건을 확인하고 조건이 참이면 {} 안의 코드를 수행. 총 11번 실행
+	{
+		i++;
+	}
+
+	i = 0;
+	while (true)	// 무한 루프의 경우 루프를 탈출하는 조건을 반드시 설정해야 한다. 총 11번 실행
+	{
+		i++;
+		if (i > 10)
+		{
+			break;
+		}
+	}
+
+	i = 0;
+	do
+	{
+		i++;
+	} while (i < 11);		// 일단 {} 사이의 코드를 한번 실행하고 조건을 확인한 후 조건이 참이면 다시 실행. 총 10번 실행
+
+	for (int j = 0; j < 10; j++)	// j<10 조건을 확인하고 조건이 참이면 {}사이 코드 실행. 총 10번 실행
+	{
+		if (j % 2 == 0)		// 짝수는 처리하지 않고 스킵
+			continue;		// 이 이후의 코드는 실행하지 않고 loop의 시작점으로 돌아가기
+
+		printf("%d is odd.", j);	// 홀수는 홀수라고 출력하고 짝수는 아무것도 안함
+	}
+}
+
+void Test::Test_1220_SlotMachine()
+{
+	std::srand(std::time(0));
+
+	// 슬롯머신
+	// 처음에 돈을 걸고
+	// 랜덤으로 숫자를 3개 뽑아서 셋다 같은 숫자가 나오면 100배로 돌려주기
+	// 다시 처음으로
+
+	// 내가 보유하고 있는 돈
+	int money = 100000;
+	const int WinRate = 100;
+
+	while (money > 0)
+	{
+		// 현재 배팅한 돈
+		int bet = 0;
+		printf("Bet your money(%d) : ", money);
+		cin >> bet;	// 입력 받고
+
+		if (bet > 0 && bet <= money)
+		{
+			// 배팅 금액이 0보다 크고 현재 보유한 금액보다는 작아야 한다.
+			money -= bet;					// 배팅금액 빼기
+			printf("Spin slot!\n");
+			int num1 = std::rand() % 10;	// 0 ~ 9 사이를 랜덤으로 결정
+			int num2 = std::rand() % 10;
+			int num3 = std::rand() % 10;
+
+			// num1 = num2 = num3 = 7;
+			printf("Numbers : (%d) (%d) (%d)\n", num1, num2, num3);	// 랜덤 숫자 출력
+
+			if (num1 == num2 && num2 == num3)	// 1,2,3이 같은지 확인
+			{
+				int prize = bet * WinRate;		// 상금 결정
+				printf("Congratulation! You WIN!\n");
+				printf("You got (%d)\n", prize);
+				money += prize;	// 상금을 내 돈에 추가
+			}
+		}
+	}
+
+	printf("GAME OVER");
+}
+
+void Test::Test_1220_RPS()
+{
+	std::srand(std::time(0));
+
+	// 가위바위보
+	// 3선승
+
+	const int Rock = 1;
+	const int Paper = 2;
+	const int Scissors = 3;
+
+	int mySelection = 0;
+	string selectText = "";
+
+	int myWinCount = 0;
+	int enemyWinCount = 0;
+
+	while (myWinCount < 3 && enemyWinCount < 3)
+	{
+		while (mySelection < 1 || mySelection > 3)
+		{
+			printf("Select Rock(1) Paper(2) Scissors(3) : ");
+			cin >> mySelection;		// 나의 선택
+
+			switch (mySelection)
+			{
+			case 1:
+				selectText = "Rock";
+				break;
+			case 2:
+				selectText = "Paper";
+				break;
+			case 3:
+				selectText = "Scissors";
+				break;
+			default:
+				break;
+			}
+		}
+
+		printf("Your select is [%s]\n", selectText.c_str());	// 나의 선택 출력
+		int enemySelection = (rand() % 3) + 1;
+		switch (enemySelection)
+		{
+		case 1:
+			selectText = "Rock";
+			break;
+		case 2:
+			selectText = "Paper";
+			break;
+		case 3:
+			selectText = "Scissors";
+			break;
+		}
+		printf("Enemy select is [%s]\n", selectText.c_str());	// 나의 선택 출력
+
+		switch (mySelection)
+		{
+		case 1:
+			switch (enemySelection)
+			{
+			case 1:
+				// 무승부
+				printf("Draw\n");
+				break;
+			case 2:
+				// 적의 승리
+				enemyWinCount++;
+				printf("ENEMY WIN\n");
+				break;
+			case 3:
+				// 나의 승리
+				myWinCount++;
+				printf("YOU WIN\n");
+				break;
+			}
+			break;
+		case 2:
+			switch (enemySelection)
+			{
+			case 1:
+				// 나의 승리
+				myWinCount++;
+				printf("YOU WIN\n");
+				break;
+			case 2:
+				// 무승부
+				printf("Draw\n");
+				break;
+			case 3:
+				// 적의 승리
+				enemyWinCount++;
+				printf("ENEMY WIN\n");
+				break;
+			}
+			break;
+		case 3:
+			switch (enemySelection)
+			{
+			case 1:
+				// 적의 승리
+				enemyWinCount++;
+				printf("ENEMY WIN\n");
+				break;
+			case 2:
+				// 나의 승리
+				myWinCount++;
+				printf("YOU WIN\n");
+				break;
+			case 3:
+				// 무승부
+				printf("Draw\n");
+				break;
+			}
+			break;
+		}
+
+		printf("You : [%d], Enemy : [%d]\n", myWinCount, enemyWinCount);
+		mySelection = 0;
+	}
 }

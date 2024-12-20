@@ -1,7 +1,6 @@
 #include <iostream> // F12로 선언을 확인할 수 있다.
 #include "Test.h"
 
-
 using namespace std;    // std 네임스페이스를 기본적으로 사용한다고 표시
 
 int main()  // main 함수(엔트리포인트)
@@ -13,8 +12,15 @@ int main()  // main 함수(엔트리포인트)
 	// day.Test_1220_Assignment();
 	// day.Test_1220_Comparison();
 	// day.Test_1220_Logical();
+	// day.Test_1220_ControlStatement();
+	// day.Test_1220_SlotMachine();
+	// day.Test_1220_RPS();
+	
 
 
+
+
+	
 }
 
 // F5 : 디버그 모드로 시작
