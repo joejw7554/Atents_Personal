@@ -568,3 +568,19 @@ float Add(float num1, float num2)
 	return num1 + num2;
 }
 
+void Maze::MazeGame()
+{
+	cout << "Welcome The Game has Started" << endl;
+	cout << "Generating Map" << endl;
+
+
+
+}
+
+void Maze::MazeGame_Movement()
+{
+}
+
+void Maze::MazeGame_Event()
+{
+}
