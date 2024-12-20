@@ -1,49 +1,28 @@
+#include <iostream> // F12로 선언을 확인할 수 있다.
 #include "Test.h"
-#include <iostream>
-#include <math.h>
 
-#define PI 3.14f
-using namespace std;
 
-int main() //main 함수 (Entry Point)
+using namespace std;    // std 네임스페이스를 기본적으로 사용한다고 표시
+
+int main()  // main 함수(엔트리포인트)
 {
-	//Test::Test_1219_InputOutPut();
-
-
-	int i = 0;
-	int i2 = 2;
-	cout << "Integer Size: " << sizeof(i) << "Byte" << endl;
-
-	//태생적으로 오차가 있는 데이터타입이다
-	float f = 30.54f;
-	cout << "Float Val: " << f << endl;
-	cout << "Float size: " << sizeof(f) << "Byte" << endl;
-
-	
-	auto c = 20.f;
-	cout << "Auto size: " << sizeof(f) << "Byte" << endl;
-
-	cout << PI << endl;
-
-	float aa = (int)(10 + 10.5f);
-	cout << aa << endl;
-
-	int a = 35;
-	int b = 6;
-	int Num1 = a % b;
-	int Num2 = a - (b * (a / b));
-
-	cout << Num1 << endl;
-	cout << Num2 << endl;
-
+	Test day;
+	// day.Test_1219_InputOutput();
+	// day.Test_1219_DataType();
+	// day.Test_1219_ArithmeticOperator();
+	// day.Test_1220_Assignment();
+	// day.Test_1220_Comparison();
+	// day.Test_1220_Logical();
 
 
 }
-//F7 프로그램 빌드
-//ctrl + , 코드검색
-//ctrl +  tab : 열려있는 창 이동~
-//Shift + del 한줄씩 지워~
-//ctrl + d 한줄복사
 
-
-
+// F5 : 디버그 모드로 시작
+// F10 : 디버그 모드에서 브레이크 포인트에서 멈췄을 때 누르면 브레이크 포인트에서 한 줄씩 진행한다. 
+// F7 : 프로그램 빌드
+// Shift + Del : 한줄씩 지우기
+// Ctrl + D : 한줄 복사
+// Ctrl + K + O : 헤더와 소스를 전환하기
+// Ctrl + , : Go to All 메뉴 열기
+// Ctrl + . : 빠른 작업 및 리팩토링
+// Ctrl + Tab : 열려있는 창 이동
