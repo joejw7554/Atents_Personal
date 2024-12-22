@@ -4,6 +4,8 @@
 // 정의부
 using namespace std;
 
+
+
 void Test::Run()
 {
 }
@@ -14,19 +16,19 @@ void Test::Run2()
 
 void Test::Test_1219_InputOutput()
 {
-    std::string name;
-    int number = 10;
-    float fNumber = 10.0f;
+	std::string name;
+	int number = 10;
+	float fNumber = 10.0f;
 
-    //std::cin >> number;     // C++ 표준 입력 방식
-    //scanf_s("%d", &number);       
-    std::cin >> name;
+	//std::cin >> number;     // C++ 표준 입력 방식
+	//scanf_s("%d", &number);       
+	std::cin >> name;
 
-    //std::cout << "Hello World! " << number <<"\n";  // C++의 표준 콘솔 출력 방식
-    //printf("Hello World! %d\n", fNumber);   // C언어의 표준 출력 방식 (%d:정수, %f:실수)
-    //printf("Hello World! %f\n", fNumber);
-    //std::cout << "My name is " << name << ".\n";
-    printf("My name is %s.\n", name.c_str());
+	//std::cout << "Hello World! " << number <<"\n";  // C++의 표준 콘솔 출력 방식
+	//printf("Hello World! %d\n", fNumber);   // C언어의 표준 출력 방식 (%d:정수, %f:실수)
+	//printf("Hello World! %f\n", fNumber);
+	//std::cout << "My name is " << name << ".\n";
+	printf("My name is %s.\n", name.c_str());
 }
 
 void Test::Test_1219_DataType()
@@ -178,7 +180,7 @@ void Test::Test_1220_Logical()
 
 	// ! : not. true는 false로, false는 true로 변경.
 	result = true;
-	result = !result;	
+	result = !result;
 }
 
 void Test::Test_1220_Bitwise()
@@ -568,19 +570,148 @@ float Add(float num1, float num2)
 	return num1 + num2;
 }
 
+
+// 주말 과제
+	// 텍스트 미로탐색 게임 만들기
+	// 주변환경은 텍스트로만 표현
+	// 이동은 1~4를 입력받아서 처리
+	// 골인지점에 도착하면 게임 종료
+
+
+	//조사식 할 때int(*)[3]) pAdress, //[4][3]기준
+
 void Maze::MazeGame()
 {
+	GameStart();
+
+}
+
+void Maze::GameStart()
+{
 	cout << "Welcome The Game has Started" << endl;
-	cout << "Generating Map" << endl;
+	cout << "Generating Maps....." << endl;
+
+	GenerateMap(Map);
 
 
+	while (IsOnDestionation())
+	{
+		MazeGame_Movement();
+	}
+	cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
+	cout << "You have arrived on the destination" << endl;
+	cout << "Congratulation YOU WIN"<<endl;
+}
 
+void Maze::GenerateMap(GroundType(*Map)[ROW])
+{
+	int ColumLastIndex = COL - 1;
+	int RowLastIndex = ROW - 1;
+
+	//스타트지점 정의
+	*(*Map) = GroundType::Start;
+
+	//골인지점 정의
+	*(*(Map + ColumLastIndex) + RowLastIndex) = GroundType::Destination;
+
+	//이동 불가 지형(Mountain) 정의
+	//S: Start X: Blocked G: Destination
+	//  S X X
+	//  	X
+	//  X   X
+	//  	G
+
+	*(*(Map)+RowLastIndex) = GroundType::Mountain;
+	*(*(Map)+(RowLastIndex - 1)) = GroundType::Mountain;
+
+
+	*(      *(Map + (ColumLastIndex - 1)) + RowLastIndex) = GroundType::Mountain;
+	*(      *(Map + (ColumLastIndex - 1)) + (RowLastIndex - 2)      ) = GroundType::Mountain;
+
+	*(      *(Map + ColumLastIndex)       + (RowLastIndex - 2)   ) = GroundType::Mountain;
+
+	PlayerLocation = *Map;
+}
+
+bool Maze::IsValidMovement(GroundType** PlayerLocation, char playerInput)
+{
+	GroundType* Temp = *PlayerLocation;
+
+	switch (playerInput)
+	{
+	case 'W':
+		Temp=Temp - ROW;
+		break;
+
+	case 'S':
+		Temp =Temp + ROW;
+		break;
+
+	case 'A':
+		Temp =Temp-1;
+
+		break;
+
+	case 'D':
+		Temp =Temp+1;
+		break;
+
+	default:
+		cout << "Not Valid Command TryAgain" << endl;
+		return false;
+	}
+	
+	if (*Temp == GroundType::Mountain)
+	{
+		cout << "You can't Move To MOUNTAIN!" << endl;
+		return false;
+	}
+	else if (*Temp == GroundType::Normal || *Temp == GroundType::Destination)
+	{
+		*PlayerLocation = Temp;
+		return true;
+	}
+	else
+	{
+		cout << "That's blocked." << endl;
+		return false;
+	}
 }
 
 void Maze::MazeGame_Movement()
 {
+	cout << " Choose your direction" << endl;
+	cout << "W: North, S : South  A : West, D : East" << endl;
+	char PlayerSelection = 0;
+	cin >> PlayerSelection;
+
+	PlayerSelection=toupper(PlayerSelection);
+
+	if (IsValidMovement(&PlayerLocation, PlayerSelection))
+	{
+		switch (PlayerSelection)
+		{
+		case 'W' :
+			cout << "You have moved to North. It's Ground" << endl;
+			break;
+
+		case 'S':
+			cout << "You have moved to South. It's Ground" << endl;
+			break;
+
+		case 'A':
+			cout << "You have moved to West. It's Ground" << endl;
+			break;
+
+		case 'D':
+			cout << "You have moved to East. It's Ground" << endl;
+			break;
+		}
+	}
+
 }
 
-void Maze::MazeGame_Event()
+bool Maze::IsOnDestionation()
 {
+	return *PlayerLocation != GroundType::Destination;
 }
