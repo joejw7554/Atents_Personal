@@ -13,8 +13,6 @@ protected:
 
 private:
 	int address = 0;
-
-
 };
 
 class Dog : public Animal
