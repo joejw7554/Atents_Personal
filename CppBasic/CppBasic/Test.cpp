@@ -4,8 +4,6 @@
 // 정의부
 using namespace std;
 
-
-
 void Test::Run()
 {
 }
@@ -16,19 +14,19 @@ void Test::Run2()
 
 void Test::Test_1219_InputOutput()
 {
-	std::string name;
-	int number = 10;
-	float fNumber = 10.0f;
+    std::string name;
+    int number = 10;
+    float fNumber = 10.0f;
 
-	//std::cin >> number;     // C++ 표준 입력 방식
-	//scanf_s("%d", &number);       
-	std::cin >> name;
+    //std::cin >> number;     // C++ 표준 입력 방식
+    //scanf_s("%d", &number);       
+    std::cin >> name;
 
-	//std::cout << "Hello World! " << number <<"\n";  // C++의 표준 콘솔 출력 방식
-	//printf("Hello World! %d\n", fNumber);   // C언어의 표준 출력 방식 (%d:정수, %f:실수)
-	//printf("Hello World! %f\n", fNumber);
-	//std::cout << "My name is " << name << ".\n";
-	printf("My name is %s.\n", name.c_str());
+    //std::cout << "Hello World! " << number <<"\n";  // C++의 표준 콘솔 출력 방식
+    //printf("Hello World! %d\n", fNumber);   // C언어의 표준 출력 방식 (%d:정수, %f:실수)
+    //printf("Hello World! %f\n", fNumber);
+    //std::cout << "My name is " << name << ".\n";
+    printf("My name is %s.\n", name.c_str());
 }
 
 void Test::Test_1219_DataType()
@@ -180,7 +178,7 @@ void Test::Test_1220_Logical()
 
 	// ! : not. true는 false로, false는 true로 변경.
 	result = true;
-	result = !result;
+	result = !result;	
 }
 
 void Test::Test_1220_Bitwise()
@@ -541,6 +539,194 @@ void Test::Test_1220_Array()
 	}
 }
 
+void Test::Test_1223_Pointer()
+{
+	// 포인터 : 메모리 주소를 저장하는 변수
+	int a = 10;
+	int* pAddress = nullptr;
+	pAddress = &a;	// 주소연산자 &로 a변수의 주소를 가져오기
+
+	int b = *pAddress;	// 간접참조연산자 *로 pAddress 주소에 들어있는 데이터를 int타입으로 가져오는 것
+
+	int size = sizeof(int*);
+
+	int array[5] = { 1,3,5,7,9 };
+	int array2[4][3] = {	// 배열은 뒤에서부터 해석(3개짜리가 4개 있다.)
+		{1,2,3},
+		{4,5,6},
+		{7,8,9},
+		{10,11,12}
+	};
+
+	pAddress = array;
+	pAddress += 1;	// int의 byte 사이즈만큼 증가
+	pAddress = &array2[0][0];	// 배열의 시작지점의 주소를 pAddress에 주기
+	// 디버그로 볼때 조사식에 아래처럼 설정해야 구조를 확인하기 쉽다
+	// (int(*)[3])pAddress,4
+
+	// pAddress + 1;	array[1]; 같은 동작
+	// *(pAddress + 5) = 30;	// 범위를 벗어나서 접근
+
+	int* mem = (int*)malloc(sizeof(int) * 5);	// C스타일의 메모리 할당. int 5개 크기로 메모리를 할당받음
+	free(mem);			// C스타일의 메모리 해제
+	mem = nullptr;		// 메모리가 해제되었다는 표시용
+
+	mem = new int;		// C++ 스타일의 메모리 할당
+	delete mem;			// C++ 스타일의 메모리 해제
+	mem = new int[5];
+	delete[] mem;		// 배열일 경우는 delete도 배열로
+	mem = nullptr;
+
+	mem = new int[5] {2, 4, 6, 8, 10};
+
+	TestFuction3(array, 5);
+	TestFuction3(mem, 5);
+
+	delete[] mem;
+	mem = nullptr;
+}
+
+void Test::Test_1223_Reference()
+{
+	// 참조(Reference)
+	int number = 10;
+	int& ref = number;	// 참조는 반드시 참조하는 대상이 초기화 되어야 한다.
+	ref = 5;			// number도 같이 수정된다.
+
+	//int& ref2 = 10;		// 임시 값은 참조대상이 될 수 없다.
+
+	// int&&
+	// std::forward;
+	// std::move;
+
+	TestFuction4(number);
+}
+
+void Test::Test_1223_String()
+{
+	// 캐스팅
+	int i = 3.14f;		// 암시적 캐스팅
+	int j = (int)3.14f;	// 명시적 캐스팅
+
+	int k = static_cast<int>(3.14f);	// C++ 스타일. 컴파일타임에 캐스팅 수행. 
+	// dynamic_cast	// 상속구조에서 런타임에 안전하게 데이터 캐스팅을 수행.
+	// const_cast	// const또는 volatile 속성을 추가하거나 제거할 때 사용. 주로 상수성 제거용
+	// reinterpret_cast // 포인터 타입간에 강제 변환용(매우 위험). C스타일 캐스팅에 가까움
+
+	const char* str = "abcde";						// 문자열의 마지막은 '\0'으로 끝난다.
+	char* str2 = const_cast<char*>("abcde");
+	char str3[10] = "abcde";
+	char* str4 = new char[10];
+	memset(str4, 0, sizeof(char) * 10);				// 특정 포인터가 가리키는 메모리 위치에서 크기만큼 특정 값을 채우는 함수	
+	strcpy_s(str4, 10, "abcde");
+	printf("str : %s\n", str2);
+	char* str5 = (char*)malloc(sizeof(char) * 10);
+	strcpy_s(str5, 10, "abcde");
+
+	free(str5);
+	str5 = nullptr;
+	delete[] str4;	// 먼저 할당한 것이 나중에 해제되어야 한다.
+	str4 = nullptr;
+
+	//char str6[5] = "abcde";	// \0를 포함해 6개짜리 문자열이다.
+
+	int size = strlen(str);		// 문자열의 길이를 리턴하는 함수
+	printf("str : %s, length : %d\n", str, size);
+
+	strcpy_s(str3, "Hello");	// 소스문자열을 목표 주소에 복사
+	printf("str3 : %s\n", str3);
+
+	strcat_s(str3, " W\n");		// 소스문자열을 목표 주소에 있는 문자열 마지막에 덧붙인다.
+	printf("str3 : %s\n", str3);
+
+	int result = strcmp("abc", "abc");	// 같으면 리턴이 0, 
+	printf("Result : %d\n", result);
+	result = strcmp("abc", "ab");		// 1
+	printf("Result : %d\n", result);
+	result = strcmp("ab", "abc");		// -1
+	printf("Result : %d\n", result);
+
+	// 실습
+	// int MyStrLen(char*); 함수 만들기 : strlen과 같은 기능을 한다.
+	// int MyStrCmp(char*, char*); 함수 만들기 : strcmp과 같은 기능을 한다.
+
+	//"1321,55,87,57,786" 파싱
+}
+
+void Test::Test_1223_StringPractice()
+{
+	char str[16] = "12345";
+	int length = MyStrLen(str);
+	printf("Length : %d\n", length);
+
+	char str2[16] = "12345";
+	char str3[16] = "12345";
+	int result1 = MyStrCmp(str2, str3);
+	int result2 = strcmp(str2, str3);
+	printf("Cmp result : %d, %d\n", result1, result2);	// 0
+
+	char str4[16] = "12345";
+	char str5[16] = "12347";
+	result1 = MyStrCmp(str4, str5);
+	result2 = strcmp(str4, str5);
+	printf("Cmp result : %d, %d\n", result1, result2);		// -1
+
+	char str6[16] = "12347";
+	char str7[16] = "12345";
+	result1 = MyStrCmp(str6, str7);
+	result2 = strcmp(str6, str7);
+	printf("Cmp result : %d, %d\n", result1, result2);		// -1
+
+	char str8[16] = "1234";
+	char str9[16] = "12345";
+	result1 = MyStrCmp(str8, str9);
+	result2 = strcmp(str8, str9);
+	printf("Cmp result : %d, %d\n", result1, result2);		// -1
+
+	char str10[16] = "12345";
+	char str11[16] = "1234";
+	result1 = MyStrCmp(str10, str11);
+	result2 = strcmp(str10, str11);
+	printf("Cmp result : %d, %d\n", result1, result2);		// 1
+
+
+	// "1321,55,87,57,786" 파싱
+	char raw[32] = "1321,55,87,57,786";
+	int parseResult[5];
+	memset(parseResult, 0, sizeof(int) * 5);
+	MyParser(raw, parseResult);
+
+	/*int pow = MyPow(10, 3);
+	pow = MyPow(10, 1);
+	pow = MyPow(10, 0);
+
+	int num = MyAtoI(const_cast<char*>("1234"));
+	num = MyAtoI(const_cast<char*>("14"));
+	num = MyAtoI(const_cast<char*>("1"));
+	num = MyAtoI(const_cast<char*>("12358"));*/
+}
+
+void Test::Test_1223_Structure()
+{
+	//MyStruct st = { 1, 10.0f, 5, 20 };
+	//st.x = 10;
+	//st.y = 20;
+	//float result = TestStruct1(st);
+	//result = TestStruct2(&st);
+	//result = TestStruct3(st);
+	//st.x;
+
+	//MyStruct* pSt = new MyStruct(1, 10.0f, 5, 20.0f);
+	//pSt->damage = 100;
+
+	Vector2D a = { 1,2 };
+	Vector2D b = { 5,3 };
+	Vector2D c = a + b;
+	c = a - b;
+	c = a * 2;
+	c = a / 2;
+}
+
 void TestFunction(int number1, float number2)	// 함수의 정의
 {
 	// 함수의 바디, 코드 블럭
@@ -560,6 +746,221 @@ int TestFunction2(int number1, float number2)
 	printf("Hello");	// 이 줄은 절대 실행되지 않는다.
 }
 
+void TestFuction3(int* data, int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		printf("Pointer data %d : %d\n", i, data[i]);
+	}
+}
+
+void TestFuction4(int& data)
+{
+	printf("Referece data : %d", data);
+}
+
+int MyStrLen(char* str)
+{
+	int index = 0;
+	//while (str[index] != '\0')
+	while (*(str+index) != '\0')
+	{
+		index++;
+	}
+
+	return index;
+}
+
+int MyStrCmp(char* str1, char* str2)
+{
+	int result = 0;
+	int index = 0;
+	while (str1[index] != '\0' && str2[index] != '\0')		// !(str1[index] == '\0' || str2[index] == '\0')
+	{
+		if (str1[index] == str2[index])
+		{
+			index++;
+		}
+		else if (str1[index] > str2[index])
+		{
+			return 1;	// 위치의 글자가 다르다.
+		}
+		else if (str1[index] < str2[index])
+		{
+			return -1;	// 위치의 글자가 다르다.
+		}
+	}
+
+	if (str1[index] == '\0' && str2[index] == '\0')
+	{
+		result = 0;		// 글자의 자리수가 같다.
+	}
+	else if (str1[index] == '\0')
+	{
+		result = -1;	// 글자의 자리수가 다르다.
+	}
+	else if (str2[index] == '\0')
+	{
+		result = 1;		// 글자의 자리수가 다르다.
+	}
+	
+	return result;
+}
+
+/*
+int strcmp(const char *str1, const char *str2) {
+	while (*str1 && (*str1 == *str2)) {
+		str1++;
+		str2++;
+	}
+	return *(unsigned char*)str1 - *(unsigned char*)str2;
+}
+*/
+
+int MyPow1(int Val, int expo)
+{
+	return Val * 10 * expo;
+}
+
+void MyParser(char* source, int* out, int count)
+{
+	char* temp = source;
+
+	//총 횟수 정의
+	int LoopCount = count;
+
+	//시작지점 정의하기]
+	char* StartingPoint = source;
+
+	//,지점 찾기
+	char* DivisionPoint= strrchr(temp, ',');
+
+	int size = DivisionPoint - StartingPoint;
+
+	//토큰화할 공간 따로  Array 준비 이후 초기화
+	char Token[10];
+	memset(Token, '\0', sizeof(char)*10);
+
+	strcpy_s(Token, size, temp); //토큰화하하기
+
+	int i = 0;
+	while (Token[i]!='\0')
+	{
+		int EachNumber = Token[i] - '0';
+		MyPow1(EachNumber, size);
+
+		i++;
+	}
+
+	//숫자로 변환하기
+	
+
+	//그리고 out에다가 저장해주기
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//// "1321,55,87,57,786"
+	//// "1321" "55" "87" "57" "786"	// 5개의 토큰으로 나누기
+	//// 1321 55 87 57 786			// 토큰을 int로 변환
+	//// 변환한 것을 out에 담고 종료
+
+	//char* newStart = source;	// 토큰이 잘려지고 남은 부분(의 시작 주소)
+	//char* find = nullptr;		// ','의 위치(주소)
+	//int index = 0;				// count만큼 반복을 위한 변수 + out의 몇번째 인덱스인지
+	//do
+	//{
+	//	find = strchr(newStart, ',');	// ,가 있는 주소 찾기
+	//	int size = find - newStart;		// 글자의 자리수 확인
+
+	//	char number[8];
+	//	strncpy_s(number, newStart, size);	// 토큰 추출하기(글자로 된 숫자 뽑아내기)
+
+	//	out[index] = MyAtoI(number);		// 토큰을 int로 변환
+	//	newStart = find + 1;				// 새 시작위치 설정(,다음 위치)
+	//	index++;							// index 증가
+	//} while (index < count && *find != '\0');	// index가 count 이상이거나 더 이상 ,가 없다면(find == '\0') 반복 중지
+}
+
+int MyAtoI(char* str)
+{
+	int sum = 0;
+	int length = strlen(str);	// str = "1234"
+	for (int i = 0; i < length; i++)
+	{
+		// (str[i] - 48) : 글자로 되어 있는 숫자를 int로 변경
+		// MyPow(10, length - 1 - i) : 몇번째 자리수인지(1000, 100, 10 등등)
+		sum += (str[i] - 48) * MyPow(10, length - 1 - i);
+	}
+	return sum;
+}
+
+int MyPow(int base, int exponent)
+{
+	int result = 1;
+	for (int i = 0; i < exponent; i++)
+	{
+		result *= base;
+	}
+
+	return result;
+}
+
+float TestStruct1(MyStruct st)
+{	
+	st.x *= 2;
+	return st.x + st.y + st.damage + st.height;
+}
+
+float TestStruct2(MyStruct* st)
+{
+	st->x *= 2;
+	return st->x + st->y + st->damage + st->height;
+}
+
+float TestStruct3(MyStruct& st)
+{
+	st.x *= 2;
+	return st.x + st.y + st.damage + st.height;
+}
+
+
 int Add(int num1, int num2)
 {
 	return num1 + num2;
@@ -570,148 +971,3 @@ float Add(float num1, float num2)
 	return num1 + num2;
 }
 
-
-// 주말 과제
-	// 텍스트 미로탐색 게임 만들기
-	// 주변환경은 텍스트로만 표현
-	// 이동은 1~4를 입력받아서 처리
-	// 골인지점에 도착하면 게임 종료
-
-
-	//조사식 할 때int(*)[3]) pAdress, //[4][3]기준
-
-void Maze::MazeGame()
-{
-	GameStart();
-
-}
-
-void Maze::GameStart()
-{
-	cout << "Welcome The Game has Started" << endl;
-	cout << "Generating Maps....." << endl;
-
-	GenerateMap(Map);
-
-
-	while (IsOnDestionation())
-	{
-		MazeGame_Movement();
-	}
-	cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
-	cout << "You have arrived on the destination" << endl;
-	cout << "Congratulation YOU WIN"<<endl;
-}
-
-void Maze::GenerateMap(GroundType(*Map)[ROW])
-{
-	int ColumLastIndex = COL - 1;
-	int RowLastIndex = ROW - 1;
-
-	//스타트지점 정의
-	*(*Map) = GroundType::Start;
-
-	//골인지점 정의
-	*(*(Map + ColumLastIndex) + RowLastIndex) = GroundType::Destination;
-
-	//이동 불가 지형(Mountain) 정의
-	//S: Start X: Blocked G: Destination
-	//  S X X
-	//  	X
-	//  X   X
-	//  	G
-
-	*(*(Map)+RowLastIndex) = GroundType::Mountain;
-	*(*(Map)+(RowLastIndex - 1)) = GroundType::Mountain;
-
-
-	*(      *(Map + (ColumLastIndex - 1)) + RowLastIndex) = GroundType::Mountain;
-	*(      *(Map + (ColumLastIndex - 1)) + (RowLastIndex - 2)      ) = GroundType::Mountain;
-
-	*(      *(Map + ColumLastIndex)       + (RowLastIndex - 2)   ) = GroundType::Mountain;
-
-	PlayerLocation = *Map;
-}
-
-bool Maze::IsValidMovement(GroundType** PlayerLocation, char playerInput)
-{
-	GroundType* Temp = *PlayerLocation;
-
-	switch (playerInput)
-	{
-	case 'W':
-		Temp=Temp - ROW;
-		break;
-
-	case 'S':
-		Temp =Temp + ROW;
-		break;
-
-	case 'A':
-		Temp =Temp-1;
-
-		break;
-
-	case 'D':
-		Temp =Temp+1;
-		break;
-
-	default:
-		cout << "Not Valid Command TryAgain" << endl;
-		return false;
-	}
-	
-	if (*Temp == GroundType::Mountain)
-	{
-		cout << "You can't Move To MOUNTAIN!" << endl;
-		return false;
-	}
-	else if (*Temp == GroundType::Normal || *Temp == GroundType::Destination)
-	{
-		*PlayerLocation = Temp;
-		return true;
-	}
-	else
-	{
-		cout << "That's blocked." << endl;
-		return false;
-	}
-}
-
-void Maze::MazeGame_Movement()
-{
-	cout << " Choose your direction" << endl;
-	cout << "W: North, S : South  A : West, D : East" << endl;
-	char PlayerSelection = 0;
-	cin >> PlayerSelection;
-
-	PlayerSelection=toupper(PlayerSelection);
-
-	if (IsValidMovement(&PlayerLocation, PlayerSelection))
-	{
-		switch (PlayerSelection)
-		{
-		case 'W' :
-			cout << "You have moved to North. It's Ground" << endl;
-			break;
-
-		case 'S':
-			cout << "You have moved to South. It's Ground" << endl;
-			break;
-
-		case 'A':
-			cout << "You have moved to West. It's Ground" << endl;
-			break;
-
-		case 'D':
-			cout << "You have moved to East. It's Ground" << endl;
-			break;
-		}
-	}
-
-}
-
-bool Maze::IsOnDestionation()
-{
-	return *PlayerLocation != GroundType::Destination;
-}

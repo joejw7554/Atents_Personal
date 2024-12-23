@@ -1,4 +1,6 @@
 // 선언부
+#include "MyStruct.h"
+#include "MyClass.h"
 
 #define PI 3.141592		// 매크로 : 컴파일 할 때 PI라는 글자가 3.141592로 자동 변경된다.
 
@@ -22,11 +24,27 @@ public:
 	void Test_1220_RPS();
 	void Test_1220_Template();
 	void Test_1220_Array();
-
+	void Test_1223_Pointer();
+	void Test_1223_Reference();
+	void Test_1223_String();
+	void Test_1223_StringPractice();
+	void Test_1223_Structure();
 };
 
 void TestFunction(int, float);	// 함수의 선언 : 리턴값의 타입, 함수 이름, 파라메터들(0개 이상 가능)
 int TestFunction2(int, float);
+void TestFuction3(int* data, int size);
+void TestFuction4(int& data);
+
+int MyStrLen(char* str);
+int MyStrCmp(char* str1, char* str2);
+void MyParser(char* source, int* out, int count = 5);
+int MyAtoI(char* str);
+int MyPow(int base, int exponent);
+
+float TestStruct1(MyStruct st);
+float TestStruct2(MyStruct* st);
+float TestStruct3(MyStruct& st);
 
 int Add(int num1, int num2);
 float Add(float num1, float num2);
@@ -59,32 +77,3 @@ inline T Clamp(T value, T min, T max)
 	return result;
 }
 
-class Maze
-{
-
-#define COL 4
-#define ROW 3
-	enum Territoy
-	{
-		up, down, left, right
-	};
-
-	enum GroundType
-	{
-		Normal = 0, Mountain, Destination, Start
-	};
-
-private:
-	GroundType Map[COL][ROW] = { GroundType::Normal, };
-	GroundType *PlayerLocation= nullptr;
-
-public:
-	void MazeGame();
-
-private:
-	void GameStart();
-	void GenerateMap(GroundType(*Map)[ROW]);
-	bool IsValidMovement(GroundType** PlayerLocation, char playerInput);
-	void MazeGame_Movement();
-	bool IsOnDestionation();
-};

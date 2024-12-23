@@ -1,5 +1,7 @@
 #include <iostream> // F12로 선언을 확인할 수 있다.
 #include "Test.h"
+#include "Animal.h"
+#include "Maze.h"
 
 using namespace std;    // std 네임스페이스를 기본적으로 사용한다고 표시
 
@@ -16,26 +18,40 @@ int main()  // main 함수(엔트리포인트)
 	// day.Test_1220_ControlStatement();
 	// day.Test_1220_SlotMachine();
 	// day.Test_1220_RPS();	
+	// day.Test_1223_Pointer();
+	// day.Test_1223_Reference();
+	// day.Test_1223_String();
+	// day.Test_1223_StringPractice();
+	
+	// 클래스 : 객체의 데이터와 동작을 표현한 것
+	MyClass a;
+	a.height = 180;
 
-	//// 포인터 : 메모리 주소를 저장하는 변수
-	//int a = 10;
-	//int* pAddress = nullptr;
-	//pAddress = &a;	// 주소연산자 &로 a변수의 주소를 가져오기
+	Animal* animal = new Animal();
+	animal->Cry();
 
-	//int b = *pAddress;	// 간접참조연산자 *로 pAddress 주소에 들어있는 데이터를 int타입으로 가져오는 것
-
-	//int array[5] = { 1,3,5,7,9 };
-
-	//pAddress = array;
-	//pAddress += 1;	// int의 byte 사이즈만큼 증가
+	/*Dog* dog = new Dog();
+	dog->Cry();*/
+	Animal* dog = new Dog();
+	dog->Cry();		// Cry가 일반 함수라면 현재 자신의 타입을 기준으로 함수가 실행됨
+					// Cry가 가상 함수라면 자신의 인스턴스 기준으로 함수가 실행됨
 
 
 
-	// pAddress + 1;	array[1]; 같은 동작
-	// *(pAddress + 5) = 30;	// 범위를 벗어나서 접근
+	delete dog;
+	dog = nullptr;
 
-	Maze maze;
-	maze.MazeGame();
+	delete animal;
+	animal = nullptr;
+
+	
+
+	
+	// 주말 과제
+	// 텍스트 미로탐색 게임 만들기
+	// 주변환경은 텍스트로만 표현
+	// 이동은 1~4를 입력받아서 처리
+	// 골인지점에 도착하면 게임 종료
 }
 
 // F5 : 디버그 모드로 시작
@@ -47,6 +63,3 @@ int main()  // main 함수(엔트리포인트)
 // Ctrl + , : Go to All 메뉴 열기
 // Ctrl + . : 빠른 작업 및 리팩토링
 // Ctrl + Tab : 열려있는 창 이동
-//Ctrl M + Ctrl P 모든괄호열기
-//Ctrl M + Ctrl O 모든괄호열기
-
