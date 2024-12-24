@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Test.h"
-#include <math.h>
+#include "Animal.h"
 
 // 정의부
 using namespace std;
@@ -697,9 +697,6 @@ void Test::Test_1223_StringPractice()
 	memset(parseResult, 0, sizeof(int) * 5);
 	MyParser(raw, parseResult);
 
-
-	
-
 	/*int pow = MyPow(10, 3);
 	pow = MyPow(10, 1);
 	pow = MyPow(10, 0);
@@ -729,6 +726,49 @@ void Test::Test_1223_Structure()
 	c = a - b;
 	c = a * 2;
 	c = a / 2;
+}
+
+void Test::Test_1224_Class()
+{
+	// 클래스 : 객체의 데이터와 동작을 표현한 것
+	MyClass a;
+	a.height = 180;
+
+	Animal* animal = new Animal();
+	animal->Cry();
+
+	/*Dog* dog = new Dog();
+	dog->Cry();*/
+	Animal* dog = new Dog();
+	dog->Cry();		// Cry가 일반 함수라면 현재 자신의 타입을 기준으로 함수가 실행됨
+	// Cry가 가상 함수라면 자신의 인스턴스 기준으로 함수가 실행됨
+
+	Animal* cat = new Cat();
+	cat->Cry();
+
+	// 가상함수 
+	// 가상함수가 있는 클래스는 가상 테이블(Virtual Table)이 추가된다.
+	// 가상테이블에는 가상함수(virtual)들의 주소가 기록되어 있다.
+	// 가상함수들이 호출될때는 가상테이블에 기록된 함수의 주소로 점프한 다음 실행이 된다.
+
+	delete cat;
+	cat = nullptr;
+	delete dog;
+	dog = nullptr;
+
+	delete animal;
+	animal = nullptr;
+}
+
+void Test::Test_1224_Enum()
+{
+	int type = Plain;
+	for (int i = 0; i < NumOfLandType; i++)
+	{
+		int j = None;
+	}
+
+	int a = static_cast<int>(ELandType::Plain);
 }
 
 void TestFunction(int number1, float number2)	// 함수의 정의
@@ -828,66 +868,21 @@ void MyParser(char* source, int* out, int count)
 	// 1321 55 87 57 786			// 토큰을 int로 변환
 	// 변환한 것을 out에 담고 종료
 
+	char* newStart = source;	// 토큰이 잘려지고 남은 부분(의 시작 주소)
+	char* find = nullptr;		// ','의 위치(주소)
+	int index = 0;				// count만큼 반복을 위한 변수 + out의 몇번째 인덱스인지
+	do
+	{
+		find = strchr(newStart, ',');	// ,가 있는 주소 찾기
+		int size = find - newStart;		// 글자의 자리수 확인
 
-	char* Start = source;
-	char* CommaLocation = NULL;
-	int Index = 0;
+		char number[8];
+		strncpy_s(number, newStart, size);	// 토큰 추출하기(글자로 된 숫자 뽑아내기)
 
-	do {
-		CommaLocation = strchr(Start, ',');
-
-		int WordSize;
-		if (CommaLocation != NULL) {
-			WordSize = CommaLocation - Start;
-		}
-		else {
-			WordSize = strlen(Start);
-		}
-
-		char Numbers[8];
-		if (WordSize >= sizeof(Numbers)) {
-			printf("Error: Number size is too large.\n");
-			return;
-		}
-
-		strncpy_s(Numbers, sizeof(Numbers), Start, WordSize);
-		Numbers[WordSize] = '\0';  // 널 문자를 추가하여 문자열 끝을 표시
-
-		int Sum = 0;
-		int MaxExpo = WordSize - 1;
-
-		for (int i = 0; i < WordSize; i++) {
-			Sum += (Numbers[i] - '0') * pow(10, MaxExpo--);
-		}
-
-		out[Index++] = Sum;
-
-		if (CommaLocation != NULL) {
-			Start = CommaLocation + 1;
-		}
-		else {
-			break;
-		}
-
-		count--;
-	} while (count != 0);
-		
-
-	//char* newStart = source;	// 토큰이 잘려지고 남은 부분(의 시작 주소)
-	//char* find = nullptr;		// ','의 위치(주소)
-	//int index = 0;				// count만큼 반복을 위한 변수 + out의 몇번째 인덱스인지
-	//do
-	//{
-	//	find = strchr(newStart, ',');	// ,가 있는 주소 찾기
-	//	int size = find - newStart;		// 글자의 자리수 확인
-
-	//	char number[8];
-	//	strncpy_s(number, newStart, size);	// 토큰 추출하기(글자로 된 숫자 뽑아내기)
-
-	//	out[index] = MyAtoI(number);		// 토큰을 int로 변환
-	//	newStart = find + 1;				// 새 시작위치 설정(,다음 위치)
-	//	index++;							// index 증가
-	//} while (index < count && *find != '\0');	// index가 count 이상이거나 더 이상 ,가 없다면(find == '\0') 반복 중지
+		out[index] = MyAtoI(number);		// 토큰을 int로 변환
+		newStart = find + 1;				// 새 시작위치 설정(,다음 위치)
+		index++;							// index 증가
+	} while (index < count && *find != '\0');	// index가 count 이상이거나 더 이상 ,가 없다면(find == '\0') 반복 중지
 }
 
 int MyAtoI(char* str)

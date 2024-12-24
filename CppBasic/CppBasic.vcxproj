@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClInclude Include="Animal.h" />
     <ClInclude Include="Character.h" />
+    <ClInclude Include="enums.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="MyClass.h" />
     <ClInclude Include="MyStruct.h" />
