@@ -18,5 +18,11 @@ private:
 class Dog : public Animal
 {
 public:
-	virtual void Cry() override;
+	void Cry() override;
+};
+
+class Cat : public Animal
+{
+public :
+	void Cry() override;
 };
