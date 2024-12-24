@@ -1,6 +1,7 @@
 #include <iostream> // F12로 선언을 확인할 수 있다.
 #include "Test.h"
 #include "Animal.h"
+#include "BinarySearchTree.h"
 
 using namespace std;    // std 네임스페이스를 기본적으로 사용한다고 표시
 
@@ -22,41 +23,26 @@ int main()  // main 함수(엔트리포인트)
 	// day.Test_1223_String();
 	// day.Test_1223_StringPractice();
 	
-	LinkedList list;
-	list.Add(10);
-	list.Add(20);
-	list.Add(30);	
-	list.Print();
-
-	list.Insert(25, 2);
-	list.Print();
-	list.Insert(5, 0);
-	list.Print();
-	list.Insert(100, 100);
-	list.Print();
-	list.Insert(33, 1);
-	list.Print();
-
-	list.Remove(33);
-	list.Print();
-	list.Remove(100);
-	list.Print();
-	list.Remove(5);
-	list.Print();
-
-	list.RemoveAt(1);
-	list.Print();
-	list.RemoveAt(10);
-	list.Print();
+	BinarySearchTree Tree;
+	Tree.Insert(100, 10);
+	Tree.Insert(90, 8989989);
+	Tree.Insert(80, 10);
+	Tree.Insert(70, 10);
+	Tree.Insert(60, 10);
+	Tree.Insert(50, 10);
+	Tree.Insert(40, 10);
+	Tree.Insert(30, 10);
+	Tree.Insert(20, 10);
+	Tree.Insert(10, 10);
+	Tree.Insert(5, 10);
+	Tree.Insert(2, 10);
 
 
-	list.Clear();
-	list.Print();
-
-	list.Insert(5, 0);
-	list.Print();
+	TreeNode* Node= Tree.Search(90);
+	cout << Node->data << endl;
 
 
+	
 	// 주말 과제
 	// 텍스트 미로탐색 게임 만들기
 	// 주변환경은 텍스트로만 표현

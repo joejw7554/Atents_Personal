@@ -771,6 +771,136 @@ void Test::Test_1224_Enum()
 	int a = static_cast<int>(ELandType::Plain);
 }
 
+void Test::Test_1224_List()
+{
+	LinkedList list;
+	list.Add(10);
+	list.Add(20);
+	list.Add(30);
+	list.Print();
+
+	list.Insert(25, 2);
+	list.Print();
+	list.Insert(5, 0);
+	list.Print();
+	list.Insert(100, 100);
+	list.Print();
+	list.Insert(33, 1);
+	list.Print();
+
+	list.Remove(33);
+	list.Print();
+	list.Remove(100);
+	list.Print();
+	list.Remove(5);
+	list.Print();
+
+	list.RemoveAt(1);
+	list.Print();
+	list.RemoveAt(10);
+	list.Print();
+
+
+	list.Clear();
+	list.Print();
+
+	list.Insert(5, 0);
+	list.Print();
+}
+
+void Test::Test_1224_BST()
+{
+	BinarySearchTree tree;
+	tree.Clear();
+
+	tree.Insert(3, -1);
+	tree.Insert(1, -1);
+	tree.Insert(2, -1);
+	tree.Insert(5, -1);
+	tree.Insert(4, -1);
+	tree.PrintInOrder();
+	tree.Delete(3);
+	tree.PrintInOrder();
+	tree.Delete(2);
+	tree.PrintInOrder();
+	tree.Delete(5);
+	tree.PrintInOrder();
+	TreeNode* node = tree.Search(1);
+	node = tree.Search(5);
+
+
+	tree.Clear();
+}
+
+void Test::Test_1224_STL()
+{
+	// STL(Standard Template Library)
+	// vector : 동적 배열 컨테이더(크기를 자유롭게 늘릴 수 있다)
+	std::vector<int> numbers = { 1,2,3,4,5 };
+	numbers.reserve(20);
+	int num = numbers[0];		// num = 1
+	int size = numbers.size();	// 배열의 크기
+	numbers.push_back(6);
+	numbers.pop_back();
+	int capacity = numbers.capacity();
+	numbers.push_back(6);
+	numbers.push_back(7);
+	numbers.push_back(8);
+	numbers.push_back(9);
+	numbers.push_back(10);
+
+	/*for (int i = 0; i < numbers.size(); i++)
+	{
+		numbers[i];
+	}*/
+
+	for (auto iter = numbers.begin(); iter != numbers.end(); iter++)
+	{
+		int num = *iter;
+	}
+
+	for (auto iter = numbers.rbegin(); iter != numbers.rend(); iter++)
+	{
+
+	}
+
+	for (int& num : numbers)	// 참조로 받아오면 수정도 가능
+	{
+		num = num + 1;
+	}
+
+	// list : 이중 링크드 리스트
+	std::list<int> listNumbers = { 1,2,5,4,3 };
+	listNumbers.sort();
+	listNumbers.push_back(10);
+	listNumbers.push_front(0);
+
+	// map : 키-값 쌍을 저장하는 트리
+	std::map<int, float> mapData;
+	mapData[0] = 3.1f;
+	mapData[6] = 7.25f;
+
+	float test = mapData[0];
+	test = mapData[5];
+	auto findIter = mapData.find(6);
+	if (findIter != mapData.end())
+	{
+		// 키가 있다.
+	}
+	else
+	{
+		// 키가 없다.
+	}
+
+	std::map<std::string, int> mapName;
+	mapName["AAA"] = 10;
+	mapName["BBB"] = 50;
+
+	std::list<int>::iterator listIter = std::find(listNumbers.begin(), listNumbers.end(), 3);
+	std::vector<int>::iterator listIter2 = std::find(numbers.begin(), numbers.end(), 3);
+
+}
+
 void TestFunction(int number1, float number2)	// 함수의 정의
 {
 	// 함수의 바디, 코드 블럭
